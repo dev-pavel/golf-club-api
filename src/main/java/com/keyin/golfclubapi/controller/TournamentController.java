@@ -42,17 +42,6 @@ public class TournamentController {
         return tournamentService.addMemberToTournament(tournamentId, memberId);
     }
 
-    @GetMapping("/search/by-start-date")
-    public List<Tournament> searchTournamentsByStartDate(@RequestParam String startDate) {
-        LocalDate date = LocalDate.parse(startDate);
-        return tournamentService.searchTournamentsByStartDate(date);
-    }
-
-    @GetMapping("/search/by-location")
-    public List<Tournament> searchTournamentsByLocation(@RequestParam String location) {
-        return tournamentService.searchTournamentsByLocation(location);
-    }
-
     @GetMapping("/{tournamentId}/members")
     public List<Member> getAllMembersInTournament(@PathVariable Long tournamentId) {
         return tournamentService.getAllMembersInTournament(tournamentId);

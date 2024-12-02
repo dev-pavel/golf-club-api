@@ -7,7 +7,6 @@ import com.keyin.golfclubapi.repository.TournamentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,14 +47,6 @@ public class TournamentService {
 
         tournament.getParticipatingMembers().add(member);
         return tournamentRepository.save(tournament);
-    }
-
-    public List<Tournament> searchTournamentsByStartDate(LocalDate startDate) {
-        return tournamentRepository.findByStartDate(startDate);
-    }
-
-    public List<Tournament> searchTournamentsByLocation(String location) {
-        return tournamentRepository.findByLocationContainingIgnoreCase(location);
     }
 
     public List<Member> getAllMembersInTournament(Long tournamentId) {
