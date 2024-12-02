@@ -1,10 +1,33 @@
+version: '3.8'
+
 services:
-  mysql:
-    image: 'mysql:latest'
+  db:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: always
     environment:
-      - 'MYSQL_DATABASE=mydatabase'
-      - 'MYSQL_PASSWORD=secret'
-      - 'MYSQL_ROOT_PASSWORD=verysecret'
-      - 'MYSQL_USER=myuser'
+      MYSQL_DATABASE: golfclubdb
+      MYSQL_USER: golfuser
+      MYSQL_PASSWORD: golfpassword
+      MYSQL_ROOT_PASSWORD: rootpassword
     ports:
-      - '3306'
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  app:
+    build:
+      context: .
+    container_name: golf_club_api
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/golfclubdb
+      SPRING_DATASOURCE_USERNAME: golfuser
+      SPRING_DATASOURCE_PASSWORD: golfpassword
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+volumes:
+  db_data:
